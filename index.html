@@ -1,0 +1,1589 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Servis Objeções</title>
+<meta name="description" content="Guia de contorno de objeções para consultores comerciais da Servis, vertical de condomínios.">
+<meta name="theme-color" content="#022F63">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Objeções">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<!-- Montserrat é opcional: sem internet, a página usa as fontes do sistema -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap">
+<script>
+  /* Aplica o tema salvo antes de desenhar a página, para evitar piscada */
+  try {
+    var t = JSON.parse(localStorage.getItem('servisObj.tema'));
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+</script>
+<style>
+:root {
+  --navy: #022F63;
+  --navy-deep: #011936;
+  --navy-soft: #1E4278;
+  --orange: #F07D00;
+  --orange-light: #FF9933;
+  --orange-deep: #C46600;
+
+  --bg: #F3F4F6;
+  --surface: #FFFFFF;
+  --surface-2: #F9FAFB;
+  --text: #0A0A0A;
+  --muted: #4B5563;
+  --border: #D1D5DB;
+  --header-bg: #022F63;
+  --focus: #F07D00;
+  --shadow: 0 1px 2px rgba(2, 47, 99, .06), 0 4px 14px rgba(2, 47, 99, .06);
+
+  --portras-bg: #EAF0F8; --portras-bd: #C9D6EA; --portras-ink: #022F63;
+  --args-bg: #FFFFFF;    --args-bd: #D1D5DB;    --args-ink: #022F63;
+  --falas-bg: #FFF4E6;   --falas-bd: #F5C27F;   --falas-ink: #8A4700;
+  --virada-bg: #022F63;  --virada-fg: #FFFFFF;  --virada-ink: #FF9933;
+  --prova-bg: #E7F4F2;   --prova-bd: #A9D6CF;   --prova-ink: #0F766E;
+  --evitar-bg: #FBECEC;  --evitar-bd: #EDB8B8;  --evitar-ink: #B91C1C;
+  --ph-bg: #FFE3BF;      --ph-fg: #6B3600;
+
+  --font: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --radius: 14px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0A1322; --surface: #102038; --surface-2: #0D1A2E; --text: #F3F4F6; --muted: #AEB7C6;
+    --border: #23395C; --header-bg: #011936; --shadow: 0 1px 2px rgba(0,0,0,.3);
+    --portras-bg: #12294A; --portras-bd: #23457A; --portras-ink: #A9C6F2;
+    --args-bg: #102038;    --args-bd: #23395C;    --args-ink: #A9C6F2;
+    --falas-bg: #33220F;   --falas-bd: #6E4614;   --falas-ink: #FFB566;
+    --virada-bg: #1E4278;  --virada-fg: #FFFFFF;  --virada-ink: #FFB566;
+    --prova-bg: #0C2B29;   --prova-bd: #1D5A53;   --prova-ink: #74D4C6;
+    --evitar-bg: #341517;  --evitar-bd: #6E2A2D;  --evitar-ink: #F4A1A1;
+    --ph-bg: #5A3510;      --ph-fg: #FFD7A6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0A1322; --surface: #102038; --surface-2: #0D1A2E; --text: #F3F4F6; --muted: #AEB7C6;
+  --border: #23395C; --header-bg: #011936; --shadow: 0 1px 2px rgba(0,0,0,.3);
+  --portras-bg: #12294A; --portras-bd: #23457A; --portras-ink: #A9C6F2;
+  --args-bg: #102038;    --args-bd: #23395C;    --args-ink: #A9C6F2;
+  --falas-bg: #33220F;   --falas-bd: #6E4614;   --falas-ink: #FFB566;
+  --virada-bg: #1E4278;  --virada-fg: #FFFFFF;  --virada-ink: #FFB566;
+  --prova-bg: #0C2B29;   --prova-bd: #1D5A53;   --prova-ink: #74D4C6;
+  --evitar-bg: #341517;  --evitar-bd: #6E2A2D;  --evitar-ink: #F4A1A1;
+  --ph-bg: #5A3510;      --ph-fg: #FFD7A6;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+svg.i { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- Cabeçalho ---------- */
+.app-header { background: var(--header-bg); color: #fff; }
+.topbar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; padding-top: max(8px, env(safe-area-inset-top));
+  min-height: 60px;
+}
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; text-decoration: none; color: inherit; }
+.brand img { height: 46px; width: auto; display: block; }
+.brand-name {
+  font-weight: 800; font-size: 1.0625rem; letter-spacing: .01em; line-height: 1.1;
+  padding-left: 12px; border-left: 2px solid rgba(255,255,255,.25);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.brand-name small { display: block; font-weight: 600; font-size: .6875rem; text-transform: uppercase; letter-spacing: .08em; color: var(--orange-light); }
+.icon-btn {
+  min-width: 44px; height: 44px; border-radius: 12px; border: 1px solid rgba(255,255,255,.22);
+  background: transparent; color: #fff; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 0 10px; font-weight: 700; font-size: .875rem;
+}
+.icon-btn[aria-pressed="true"] { background: var(--orange); border-color: var(--orange); color: var(--navy-deep); }
+.icon-btn .lbl { display: none; }
+@media (min-width: 420px) { .icon-btn .lbl { display: inline; } }
+
+/* ---------- Busca e filtros ---------- */
+.controls { position: sticky; top: 0; z-index: 10; background: var(--header-bg); padding: 4px 0 10px; box-shadow: 0 6px 12px -10px rgba(0,0,0,.5); }
+.search { position: relative; margin: 0 16px; }
+.search svg.i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #6B7280; pointer-events: none; }
+.search input {
+  width: 100%; height: 50px; border-radius: 12px; border: 2px solid transparent;
+  padding: 0 48px 0 46px; background: #fff; color: #0A0A0A; font-size: 1rem; font-weight: 500;
+  -webkit-appearance: none; appearance: none;
+}
+.search input::placeholder { color: #6B7280; }
+.search input:focus { outline: none; border-color: var(--orange); }
+.search input::-webkit-search-cancel-button { display: none; }
+.search .clear {
+  position: absolute; right: 3px; top: 3px; width: 44px; height: 44px; border: 0; background: transparent;
+  color: #4B5563; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+}
+.chips {
+  display: flex; gap: 8px; overflow-x: auto; padding: 10px 16px 2px; scroll-snap-type: x proximity;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex: none; scroll-snap-align: start; min-height: 44px; padding: 0 16px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.3); background: transparent; color: #fff;
+  font-weight: 600; font-size: .875rem; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px;
+}
+.chip .n { font-size: .75rem; opacity: .75; font-weight: 700; }
+.chip[aria-pressed="true"] { background: var(--orange); border-color: var(--orange); color: var(--navy-deep); }
+.chip[aria-pressed="true"] .n { opacity: 1; }
+
+/* ---------- Layout ---------- */
+.layout { display: block; }
+.pane-list { padding-bottom: 16px; }
+body[data-view="list"] .pane-main { display: none; }
+body:not([data-view="list"]) .pane-list { display: none; }
+
+/* ---------- Lista ---------- */
+.status { margin: 14px 16px 8px; font-size: .875rem; color: var(--muted); font-weight: 600; }
+.notice {
+  margin: 12px 16px 0; padding: 10px 12px; border-radius: 10px; font-size: .875rem;
+  background: var(--falas-bg); border: 1px solid var(--falas-bd); color: var(--text);
+}
+.cards { list-style: none; margin: 0; padding: 0 16px; display: grid; gap: 10px; }
+.cards li { position: relative; min-width: 0; }
+.card {
+  display: block; min-height: 72px; padding: 14px 56px 14px 16px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border); color: var(--text); text-decoration: none;
+  box-shadow: var(--shadow); transition: border-color .15s;
+}
+.card:hover { border-color: var(--navy-soft); }
+.card[aria-current="true"] { border-color: var(--orange); box-shadow: 0 0 0 2px var(--orange) inset; }
+.card-cat { display: block; font-size: .6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 4px; }
+.card-title { display: block; font-weight: 700; font-size: 1rem; line-height: 1.35; overflow-wrap: anywhere; }
+.star {
+  position: absolute; top: 6px; right: 6px; width: 44px; height: 44px; border: 0; border-radius: 10px;
+  background: transparent; color: var(--muted); display: flex; align-items: center; justify-content: center;
+}
+.star[aria-pressed="true"] { color: var(--orange); }
+.star[aria-pressed="true"] svg.i { fill: currentColor; }
+.empty { margin: 8px 16px; padding: 20px 16px; border-radius: var(--radius); background: var(--surface); border: 1px dashed var(--border); text-align: center; }
+.empty p { margin: 0 0 12px; color: var(--muted); }
+.list-foot { margin: 18px 16px 0; }
+
+/* ---------- Botões ---------- */
+.btn {
+  min-height: 48px; padding: 0 18px; border-radius: 12px; border: 0; font-weight: 700; font-size: 1rem;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none;
+}
+.btn-primary { background: var(--orange); color: var(--navy-deep); }
+.btn-primary:hover { background: var(--orange-light); }
+.btn-ghost { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+.btn-danger { background: transparent; color: var(--evitar-ink); border: 1px solid var(--evitar-bd); }
+.btn-block { width: 100%; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ---------- Detalhe ---------- */
+.pane-main { min-width: 0; }
+.view { padding: 0 16px 32px; max-width: 860px; margin: 0 auto; }
+.view-bar {
+  position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 8px;
+  margin: 0 -16px; padding: 8px 16px; background: var(--bg); border-bottom: 1px solid var(--border);
+}
+.view-bar .spacer { flex: 1; }
+.back {
+  min-height: 44px; padding: 0 12px 0 6px; border: 0; background: transparent; color: var(--text);
+  display: inline-flex; align-items: center; gap: 4px; font-weight: 700; border-radius: 10px;
+}
+.bar-btn {
+  min-height: 44px; min-width: 44px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-weight: 700; font-size: .875rem;
+}
+.bar-btn[aria-pressed="true"] { color: var(--orange-deep); border-color: var(--orange); }
+.bar-btn[aria-pressed="true"] svg.i { fill: var(--orange); stroke: var(--orange); }
+.d-head { padding: 18px 0 4px; }
+.d-cat { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--orange-deep); }
+:root[data-theme="dark"] .d-cat { color: var(--orange-light); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .d-cat { color: var(--orange-light); } }
+.d-title { margin: 6px 0 8px; font-weight: 900; font-size: 1.5rem; line-height: 1.2; color: var(--text); overflow-wrap: anywhere; }
+.d-title:focus { outline: none; }
+.d-var { margin: 0; font-size: .875rem; color: var(--muted); }
+.jump { display: flex; gap: 8px; overflow-x: auto; padding: 12px 0 2px; scrollbar-width: none; }
+.jump::-webkit-scrollbar { display: none; }
+.jump button {
+  flex: none; min-height: 44px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); font-weight: 600; font-size: .8125rem;
+}
+.sec { margin-top: 14px; padding: 16px; border-radius: var(--radius); border: 1px solid; scroll-margin-top: 72px; }
+.sec h2 {
+  margin: 0 0 10px; display: flex; align-items: center; gap: 10px;
+  font-size: .8125rem; font-weight: 800; text-transform: uppercase; letter-spacing: .07em;
+}
+.sec h2 .num {
+  width: 26px; height: 26px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center;
+  font-size: .8125rem; background: currentColor;
+}
+.sec h2 .num span { color: var(--surface); }
+.sec p { margin: 0; }
+.sec-portras { background: var(--portras-bg); border-color: var(--portras-bd); }
+.sec-portras h2 { color: var(--portras-ink); }
+.sec-args { background: var(--args-bg); border-color: var(--args-bd); }
+.sec-args h2 { color: var(--args-ink); }
+.args { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.args li { padding-left: 14px; border-left: 3px solid var(--orange); }
+.args strong { display: block; font-weight: 700; margin-bottom: 2px; }
+.args span { color: var(--muted); }
+.sec-falas { background: var(--falas-bg); border-color: var(--falas-bd); }
+.sec-falas h2 { color: var(--falas-ink); }
+.falas { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.fala {
+  display: flex; gap: 10px; align-items: flex-start; padding: 12px 12px 12px 14px; border-radius: 12px;
+  background: var(--surface); border: 1px solid var(--falas-bd);
+}
+.fala p { flex: 1; min-width: 0; font-size: 1.0625rem; font-weight: 500; line-height: 1.5; overflow-wrap: anywhere; }
+.copy {
+  flex: none; min-height: 44px; min-width: 44px; padding: 0 10px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--surface-2); color: var(--text);
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-weight: 700; font-size: .8125rem;
+}
+.copy svg.i { width: 18px; height: 18px; }
+.copy.ok { border-color: var(--prova-ink); color: var(--prova-ink); }
+.copy .lbl { display: none; }
+@media (min-width: 400px) { .copy .lbl { display: inline; } }
+.sec-virada { background: var(--virada-bg); border-color: var(--virada-bg); color: var(--virada-fg); }
+.sec-virada h2 { color: var(--virada-ink); }
+.sec-virada .num span { color: var(--virada-bg); }
+.virada { display: flex; gap: 10px; align-items: flex-start; }
+.virada p { flex: 1; min-width: 0; font-size: 1.125rem; font-weight: 700; line-height: 1.45; overflow-wrap: anywhere; }
+.sec-virada .copy { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.35); color: #fff; }
+.sec-virada .copy.ok { border-color: var(--orange-light); color: var(--orange-light); }
+.sec-prova { background: var(--prova-bg); border-color: var(--prova-bd); }
+.sec-prova h2 { color: var(--prova-ink); }
+.sec-evitar { background: var(--evitar-bg); border-color: var(--evitar-bd); }
+.sec-evitar h2 { color: var(--evitar-ink); }
+mark.ph { background: var(--ph-bg); color: var(--ph-fg); border-radius: 4px; padding: 0 3px; font-weight: 600; }
+.sec-virada mark.ph { background: rgba(255,255,255,.18); color: #fff; }
+
+/* ---------- Modo Reunião ---------- */
+body.reuniao .sec-portras, body.reuniao .sec-args, body.reuniao .sec-prova, body.reuniao .sec-evitar,
+body.reuniao .d-var, body.reuniao .jump { display: none; }
+body.reuniao .d-title { font-size: 1.75rem; }
+body.reuniao .fala p { font-size: 1.375rem; font-weight: 600; }
+body.reuniao .virada p { font-size: 1.5rem; }
+body.reuniao .card-title { font-size: 1.125rem; }
+body.reuniao .fala, body.reuniao .virada { flex-direction: column; }
+body.reuniao .fala .copy, body.reuniao .virada .copy { align-self: flex-end; }
+.meeting-tag {
+  display: none; margin-left: 8px; padding: 2px 8px; border-radius: 6px; vertical-align: middle;
+  background: var(--orange); color: var(--navy-deep); font-size: .6875rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+}
+body.reuniao .meeting-tag { display: inline-block; }
+
+/* ---------- Formulários (registro e gestor) ---------- */
+.v-title { margin: 20px 0 6px; font-weight: 900; font-size: 1.5rem; line-height: 1.2; }
+.v-title:focus { outline: none; }
+.v-lead { margin: 0 0 16px; color: var(--muted); }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; }
+.panel h2 { margin: 0 0 6px; font-size: 1.0625rem; font-weight: 800; }
+.panel p { margin: 0 0 12px; color: var(--muted); font-size: .9375rem; }
+.field { display: block; margin-bottom: 14px; }
+.field > span { display: block; font-weight: 700; font-size: .875rem; margin-bottom: 6px; }
+.field textarea, .field select, .field input {
+  width: 100%; min-height: 48px; padding: 12px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--surface-2); font-size: 1rem;
+}
+.field textarea { min-height: 110px; resize: vertical; }
+.regs { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.reg { padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface-2); display: flex; gap: 10px; align-items: flex-start; }
+.reg div { flex: 1; min-width: 0; }
+.reg q { display: block; font-weight: 700; overflow-wrap: anywhere; }
+.reg small { display: block; color: var(--muted); margin-top: 4px; overflow-wrap: anywhere; }
+.reg .del { flex: none; width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--evitar-ink); display: flex; align-items: center; justify-content: center; }
+.kv { font-size: .9375rem; margin: 0 0 12px; }
+.kv b { font-weight: 700; }
+.msg { margin-top: 10px; font-size: .9375rem; font-weight: 600; }
+.msg.err { color: var(--evitar-ink); }
+.msg.ok { color: var(--prova-ink); }
+
+/* ---------- Vazio (desktop) ---------- */
+.placeholder { display: none; }
+
+/* ---------- Rodapé ---------- */
+.app-foot { padding: 20px 16px 28px; padding-bottom: max(28px, env(safe-area-inset-bottom)); text-align: center; font-size: .8125rem; color: var(--muted); }
+.app-foot a { color: var(--muted); display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; }
+
+/* ---------- Aviso de cópia ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: max(20px, env(safe-area-inset-bottom)); transform: translate(-50%, 20px);
+  background: var(--navy-deep); color: #fff; padding: 10px 16px; border-radius: 999px; font-weight: 700; font-size: .875rem;
+  opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 50; max-width: calc(100vw - 32px);
+  border: 1px solid rgba(255,255,255,.15); white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- Tablet ---------- */
+@media (min-width: 640px) {
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .view { padding: 0 24px 40px; }
+  .view-bar { margin: 0 -24px; padding: 8px 24px; }
+  .d-title { font-size: 1.75rem; }
+}
+
+/* ---------- Desktop: duas colunas ---------- */
+@media (min-width: 1024px) {
+  body { height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+  .app-header { flex: none; }
+  .layout { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(360px, 420px) minmax(0, 1fr); }
+  .pane-list, .pane-main { display: block !important; overflow-y: auto; min-height: 0; }
+  .pane-list { border-right: 1px solid var(--border); background: var(--bg); padding-bottom: 0; }
+  .cards { grid-template-columns: minmax(0, 1fr); }
+  .back { display: none; }
+  .view-bar { background: var(--bg); }
+  .placeholder {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    min-height: 100%; padding: 40px; color: var(--muted);
+  }
+  .placeholder h2 { color: var(--text); font-weight: 900; font-size: 1.5rem; margin: 0 0 8px; }
+  .placeholder p { max-width: 440px; margin: 0; }
+  .placeholder kbd { font-family: inherit; font-weight: 700; padding: 1px 7px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body data-view="list">
+
+<header class="app-header">
+  <div class="topbar">
+    <a class="brand" href="#/" aria-label="Servis Objeções, início">
+      <img src="data:image/png;base64,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" alt="Servis Tecnologia em Segurança" width="90" height="46">
+      <span class="brand-name"><small>Condomínios</small>Objeções</span>
+    </a>
+    <button class="icon-btn" id="btnReuniao" type="button" aria-pressed="false" title="Modo Reunião: só falas prontas e pergunta de virada, em letra maior">
+      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span class="lbl">Reunião</span><span class="sr-only"> Modo Reunião</span>
+    </button>
+    <button class="icon-btn" id="btnTema" type="button" aria-label="Alternar tema claro ou escuro">
+      <svg class="i" id="icoTema" viewBox="0 0 24 24" aria-hidden="true"></svg>
+    </button>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- Coluna da lista -->
+  <section class="pane-list" aria-label="Lista de objeções">
+    <div class="controls">
+      <div class="search" role="search">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <label class="sr-only" for="q">Buscar objeção</label>
+        <input id="q" type="search" placeholder="O que o cliente disse?" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search">
+        <button class="clear" id="btnLimpar" type="button" aria-label="Limpar busca" hidden>
+          <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="chips" id="chips" role="toolbar" aria-label="Filtrar por categoria"></div>
+    </div>
+    <div id="avisoArmazenamento" class="notice" hidden>O armazenamento deste aparelho está indisponível. Favoritos e registros valem só enquanto esta página estiver aberta.</div>
+    <p class="status" id="status" aria-live="polite"></p>
+    <ul class="cards" id="lista"></ul>
+    <div id="vazio" class="empty" hidden>
+      <p>Nenhuma objeção encontrada para essa busca.</p>
+      <a class="btn btn-primary" href="#/registrar" id="btnRegistrarVazio">Registrar esta fala</a>
+    </div>
+    <div class="list-foot">
+      <a class="btn btn-ghost btn-block" href="#/registrar">Não encontrei minha objeção</a>
+    </div>
+    <footer class="app-foot">
+      Servis Objeções · uso interno<br>
+      <a href="#/gestor">Área do Gestor</a>
+    </footer>
+  </section>
+
+  <!-- Coluna de conteúdo -->
+  <main class="pane-main" id="main">
+    <div class="placeholder" id="viewVazia">
+      <h2>Escolha uma objeção</h2>
+      <p>Digite na busca o que o cliente acabou de dizer ou toque em um card da lista. Atalho: <kbd>/</kbd> leva direto para a busca.</p>
+    </div>
+
+    <article class="view" id="viewDetalhe" hidden></article>
+
+    <section class="view" id="viewRegistrar" hidden aria-labelledby="tRegistrar">
+      <div class="view-bar">
+        <button class="back" type="button" data-act="voltar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>Voltar</button>
+      </div>
+      <h1 class="v-title" id="tRegistrar" tabindex="-1">Não encontrei minha objeção</h1>
+      <p class="v-lead">Anote a fala do cliente do jeito que ele disse. O registro fica salvo neste aparelho e pode ser exportado para o gestor alimentar a base.</p>
+      <form class="panel" id="formRegistro" novalidate>
+        <label class="field"><span>O que o cliente disse</span>
+          <textarea id="regFala" required placeholder="Ex.: A gente já tem câmera, para que mais?"></textarea>
+        </label>
+        <label class="field"><span>Quem disse</span>
+          <select id="regQuem">
+            <option>Síndico</option><option>Conselheiro</option><option>Morador</option>
+            <option>Administradora</option><option>Outro</option>
+          </select>
+        </label>
+        <label class="field"><span>Contexto (opcional)</span>
+          <textarea id="regContexto" placeholder="Momento da conversa, como você respondeu, o que funcionou"></textarea>
+        </label>
+        <button class="btn btn-primary btn-block" type="submit">Salvar registro</button>
+        <p class="msg" id="regMsg" aria-live="polite"></p>
+      </form>
+      <div class="panel">
+        <h2>Registros neste aparelho</h2>
+        <p id="regResumo"></p>
+        <ul class="regs" id="regLista"></ul>
+        <div class="btn-row" style="margin-top:14px">
+          <button class="btn btn-ghost" type="button" data-act="exportar-registros">Exportar registros em JSON</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="viewGestor" hidden aria-labelledby="tGestor">
+      <div class="view-bar">
+        <button class="back" type="button" data-act="voltar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>Voltar</button>
+      </div>
+      <h1 class="v-title" id="tGestor" tabindex="-1">Área do Gestor</h1>
+      <p class="v-lead">Atualize a base de objeções sem editar código. A base importada fica salva neste aparelho e substitui a base original até ser restaurada.</p>
+      <div class="panel">
+        <h2>Base em uso</h2>
+        <p class="kv" id="gBase"></p>
+        <div class="btn-row">
+          <button class="btn btn-primary" type="button" data-act="exportar-base">Exportar base em JSON</button>
+          <button class="btn btn-ghost" type="button" data-act="importar-base">Importar base em JSON</button>
+          <input type="file" id="arqBase" accept="application/json,.json" hidden>
+        </div>
+        <p class="msg" id="gMsg" aria-live="polite"></p>
+      </div>
+      <div class="panel">
+        <h2>Restaurar base original</h2>
+        <p>Descarta a base importada e volta para a base escrita no código deste arquivo.</p>
+        <button class="btn btn-danger" type="button" data-act="restaurar-base">Restaurar base original</button>
+      </div>
+      <div class="panel">
+        <h2>Objeções registradas pelos consultores</h2>
+        <p id="gRegs"></p>
+        <button class="btn btn-ghost" type="button" data-act="exportar-registros">Exportar registros em JSON</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ==========================================================================
+   BASE DE OBJEÇÕES
+   --------------------------------------------------------------------------
+   Edite o conteúdo aqui, sem mexer na lógica abaixo.
+   Cada objeção segue o modelo:
+   {
+     id: "identificador-unico",          // sem espaços, não repetir
+     categoria: "Nome da categoria",      // vira um chip de filtro
+     titulo: "Como o cliente fala",
+     variacoes: ["outras formas de dizer"],
+     tags: ["palavras para a busca", "sinônimos"],
+     por_tras: "O medo real por trás da objeção",
+     argumentos: [{ titulo: "Linha", explicacao: "Detalhe" }],
+     falas: ["Fala pronta 1", "Fala pronta 2"],
+     pergunta_virada: "Pergunta que devolve a conversa",
+     prova: "O que mostrar ou oferecer",
+     evitar: "O que não dizer"
+   }
+   Textos entre [colchetes] são marcadores para preencher com dados da Servis.
+   ========================================================================== */
+const OBJECOES = [
+  {
+    id: "dono-apresenta",
+    categoria: "Confiança e relacionamento",
+    titulo: "Aqui o dono da empresa vem apresentar pessoalmente para a gente",
+    variacoes: ["o dono veio aqui", "o proprietário atende a gente", "conheço o dono", "o dono da empresa é meu conhecido", "o dono me atende direto no celular"],
+    tags: ["concorrente", "relacionamento", "dono", "proprietário", "atendimento pessoal", "amizade", "conhecido", "empresa pequena", "diretor", "fundador"],
+    por_tras: "O cliente associa a atenção pessoal do dono a garantia de qualidade. A presença dele transmite compromisso e a sensação de ter a quem recorrer quando algo der errado. O medo real é ficar sem ninguém para cobrar.",
+    argumentos: [
+      { titulo: "Quem resolve o dia a dia é a operação", explicacao: "O portão de madrugada, o visitante sem aviso, o equipamento que precisa de manutenção: tudo isso é resolvido pela central, pelos técnicos e pelos processos, não pela presença do dono." },
+      { titulo: "Estrutura que não depende de uma pessoa", explicacao: "Escalonamento, supervisão e registro de cada atendimento garantem continuidade mesmo quando alguém falta, viaja ou adoece. Apresentar [processo de atendimento e escalonamento da central]." },
+      { titulo: "Relacionamento com método", explicacao: "O condomínio tem [canal de relacionamento dedicado ao condomínio] e contatos definidos para cada tipo de assunto. A atenção não depende da agenda de ninguém." }
+    ],
+    falas: [
+      "O senhor usa o iFood? Conhece o dono do iFood? E do Mercado Livre? Nunca falou com nenhum dos dois, e mesmo assim o pedido chega. Sabe por quê? Porque quem entrega não é o dono, é a operação.",
+      "Às três da manhã, quando um morador precisar abrir o portão, quem vai atender não é o dono da empresa. É a central. É isso que eu quero mostrar para o senhor.",
+      "Esse cuidado pessoal tem valor, eu respeito. Só peço que o senhor avalie também quem vai atender o seu morador quando ninguém estiver olhando."
+    ],
+    pergunta_virada: "Se o dono viajar ou adoecer, o que muda no atendimento do seu condomínio? Quero que o senhor conheça a estrutura que funciona independente de pessoa.",
+    prova: "Convite para visitar a central de monitoramento Servis e acompanhar atendimentos reais. Apresentar [processo de atendimento e escalonamento da central].",
+    evitar: "Desmerecer o dono da outra empresa ou a relação pessoal do síndico com ele. Não sugira que a atenção dele é só estratégia de venda."
+  },
+  {
+    id: "idosos",
+    categoria: "Perfil do condomínio",
+    titulo: "Nosso condomínio tem muitos idosos, eles não vão saber usar",
+    variacoes: ["os velhinhos não vão se adaptar", "o pessoal da terceira idade não mexe com tecnologia", "moradores mais velhos vão reclamar", "minha mãe não sabe usar celular", "aqui o pessoal é de idade"],
+    tags: ["idoso", "idosos", "velhinho", "velhinhos", "velho", "terceira idade", "aposentado", "melhor idade", "pessoa de idade", "tecnologia", "dificuldade", "adaptação", "cuidador", "acessibilidade"],
+    por_tras: "Medo de que os moradores mais velhos fiquem presos do lado de fora, se sintam abandonados ou reclamem. O síndico também teme o desgaste de ser o responsável pela mudança.",
+    argumentos: [
+      { titulo: "O atendimento humano continua existindo", explicacao: "Qualquer morador fala por voz com um operador da central, a qualquer hora. Ninguém fica sem atendimento por não saber usar algo." },
+      { titulo: "Reconhecimento facial dispensa tag e senha", explicacao: "O morador só olha para a câmera. Não precisa lembrar de senha, carregar cartão nem usar celular." },
+      { titulo: "Treinamento e acompanhamento na implantação", explicacao: "A implantação inclui orientação aos moradores e [ação de acolhimento na implantação, como plantão presencial nos primeiros dias]." },
+      { titulo: "Cuidadores e familiares cadastrados", explicacao: "Quem cuida do morador idoso pode ter acesso autorizado, com dias e horários definidos pela família." }
+    ],
+    falas: [
+      "Para o morador idoso, o reconhecimento facial é até mais simples que a chave: ele só olha para a câmera e a porta abre. Não precisa lembrar de nada.",
+      "E se ele tiver qualquer dúvida, aperta um botão e fala com uma pessoa, a qualquer hora.",
+      "Os familiares e os cuidadores também ficam cadastrados. Quem cuida do seu morador continua entrando, com a autorização da família."
+    ],
+    pergunta_virada: "Quais situações com os moradores mais velhos preocupam o senhor hoje? Quero mostrar como cada uma é atendida.",
+    prova: "Oferecer [ação de acolhimento na implantação, como plantão presencial nos primeiros dias] e [contato de síndico referência] de condomínio com perfil parecido.",
+    evitar: "Tratar os idosos como incapazes ou dizer que eles se acostumam rápido. Não minimize a preocupação do síndico: para ele, é a reclamação que vai bater na porta."
+  },
+  {
+    id: "condominio-grande",
+    categoria: "Perfil do condomínio",
+    titulo: "O condomínio é muito grande, tem unidades demais para portaria remota",
+    variacoes: ["aqui é muito apartamento", "são muitas torres", "o movimento aqui é grande demais", "não dá conta de tanta gente", "vai virar fila no portão"],
+    tags: ["grande", "muitas unidades", "torres", "blocos", "movimento", "fluxo", "fila", "espera", "escala", "porte", "condomínio clube", "muitos moradores"],
+    por_tras: "O síndico imagina uma fila de chamadas na central e moradores esperando no portão. Teme que o tamanho do condomínio ultrapasse a capacidade de uma operação a distância.",
+    argumentos: [
+      { titulo: "Dimensionamento antes da proposta", explicacao: "Acessos, fluxo por horário e posições de atendimento na central são calculados para o condomínio. Apresentar [estudo de dimensionamento do condomínio]." },
+      { titulo: "Cada entrada com seu fluxo", explicacao: "Pedestre, veículo e serviço são tratados separadamente, com equipamentos e regras próprias para cada um." },
+      { titulo: "O morador entra sozinho", explicacao: "Com reconhecimento facial ou tag, o morador não chama a central. A central fica dedicada a visitantes, prestadores e exceções." },
+      { titulo: "Rastreabilidade de cada abertura", explicacao: "Toda abertura fica registrada, com relatórios que o síndico consulta quando precisar." }
+    ],
+    falas: [
+      "Num condomínio grande, o morador não precisa chamar a central para entrar. Ele entra com o rosto ou com a tag. A central cuida de quem é visitante.",
+      "Antes de fechar qualquer proposta, a gente faz o dimensionamento: quantos acessos, qual o fluxo de cada horário. O projeto nasce do tamanho do seu condomínio.",
+      "E o senhor passa a ter registro de cada abertura. Hoje, num condomínio desse porte, o senhor sabe quem entrou ontem às dez da noite?"
+    ],
+    pergunta_virada: "Qual é o horário de maior movimento aqui hoje? Vamos olhar juntos como esse pico seria atendido.",
+    prova: "Apresentar [estudo de dimensionamento do condomínio], um exemplo de [relatório de acessos] e [contato de síndico referência] de condomínio de porte parecido.",
+    evitar: "Prometer tempo de atendimento sem o dimensionamento feito. Não diga que o tamanho não faz diferença: faz, e é por isso que existe projeto."
+  },
+  {
+    id: "internet-energia",
+    categoria: "Tecnologia e contingência",
+    titulo: "E se cair a internet ou faltar energia?",
+    variacoes: ["e quando a internet cair", "se acabar a luz o portão trava", "fica todo mundo preso do lado de fora", "e se o sistema sair do ar", "e quando der pane"],
+    tags: ["internet", "queda", "conexão", "link", "energia", "luz", "apagão", "falta de luz", "nobreak", "bateria", "contingência", "pane", "falha", "sistema fora do ar", "redundância"],
+    por_tras: "Medo de o condomínio ficar sem controle no momento de uma falha, com portões travados ou abertos e moradores sem ter com quem falar. É o cenário que o síndico imagina acontecendo de madrugada.",
+    argumentos: [
+      { titulo: "Redundância de link", explicacao: "O condomínio opera com mais de um caminho de comunicação com a central: [especificação do link principal e do link redundante]." },
+      { titulo: "Nobreak nos equipamentos", explicacao: "Os equipamentos críticos continuam funcionando na falta de energia por [autonomia do nobreak nos equipamentos]." },
+      { titulo: "Plano de contingência escrito", explicacao: "Cada tipo de falha tem um procedimento definido: [plano de contingência Servis para queda de link e de energia]." },
+      { titulo: "A central monitora a própria conexão", explicacao: "Quando a comunicação com o condomínio cai, a central identifica e age: [procedimento de alerta e acionamento técnico]." }
+    ],
+    falas: [
+      "É a primeira pergunta que eu faria no lugar do senhor. O condomínio tem dois caminhos de internet: se um cai, o outro assume.",
+      "Se faltar energia, os equipamentos continuam funcionando no nobreak por [autonomia do nobreak nos equipamentos]. E a central fica sabendo na hora.",
+      "Para cada tipo de falha existe um procedimento escrito. Eu deixo esse plano com o senhor para levar ao conselho."
+    ],
+    pergunta_virada: "Hoje, se faltar energia aqui de madrugada, o que acontece com o portão e com o porteiro? Vamos comparar os dois cenários.",
+    prova: "Entregar o [plano de contingência Servis para queda de link e de energia] por escrito e mostrar no projeto onde ficam o link redundante e o nobreak.",
+    evitar: "Dizer que nunca cai ou que não tem como dar problema. Não informe autonomia ou especificação sem o dado real do projeto."
+  },
+  {
+    id: "porteiro-presencial-sensacao",
+    categoria: "Confiança e relacionamento",
+    titulo: "Porteiro presencial passa mais sensação de proteção",
+    variacoes: ["prefiro ver alguém na guarita", "com gente lá embaixo é mais tranquilo", "máquina não substitui pessoa", "sem porteiro o prédio fica abandonado", "os moradores gostam de ver o porteiro"],
+    tags: ["porteiro", "presencial", "guarita", "sensação", "proteção", "pessoa", "humano", "presença física", "vigia", "tranquilidade", "abandonado"],
+    por_tras: "A presença física transmite controle. O morador vê alguém no posto e se sente cuidado. O medo é que, sem uma pessoa no local, o condomínio pareça vulnerável.",
+    argumentos: [
+      { titulo: "O porteiro presencial é alvo", explicacao: "Quem está no portão pode ser abordado, ameaçado ou rendido. A pessoa que deveria proteger fica exposta." },
+      { titulo: "Quem decide a abertura está fora do alcance", explicacao: "Na portaria remota, o operador que autoriza a entrada não está no portão. Não pode ser pressionado por quem está lá." },
+      { titulo: "Tudo gravado e registrado", explicacao: "Imagem, áudio e o registro de quem autorizou cada abertura. A sensação de proteção vira algo que se comprova." },
+      { titulo: "Procedimento igual para todos", explicacao: "A verificação de visitantes segue sempre o mesmo processo, sem exceção por simpatia, pressa ou insistência." }
+    ],
+    falas: [
+      "Eu entendo a sensação. Mas pense comigo: se alguém mal intencionado chega ao portão, quem está mais exposto, o porteiro ou o operador na central?",
+      "Na portaria remota, quem decide abrir não está no portão. Não dá para render, ameaçar ou convencer quem está na central.",
+      "E tudo fica gravado: imagem, áudio e quem autorizou. A sensação vira prova."
+    ],
+    pergunta_virada: "O que deixaria o senhor mais tranquilo: ver uma pessoa no posto ou saber que nenhuma abertura acontece sem verificação?",
+    prova: "Convite para a central acompanhar uma verificação de visitante ao vivo. Apresentar [procedimento de verificação de visitantes da central].",
+    evitar: "Desqualificar o trabalho dos porteiros ou insinuar que eles facilitam crimes. Não use relatos de violência para assustar o cliente."
+  },
+  {
+    id: "nao-demitir-porteiro",
+    categoria: "Pessoas e transição",
+    titulo: "Não quero demitir o porteiro que está aqui há anos",
+    variacoes: ["o seu João é da família", "ele trabalha aqui há muito tempo", "os moradores gostam dele", "não tenho coragem de mandar embora", "vai pegar mal com os moradores"],
+    tags: ["demitir", "demissão", "porteiro antigo", "funcionário", "emprego", "vínculo", "família", "afeto", "mandar embora", "desligamento", "transição", "zelador", "recolocação"],
+    por_tras: "Vínculo afetivo e senso de justiça. O síndico não quer ser lembrado como quem tirou o emprego de alguém querido, nem enfrentar a reação dos moradores.",
+    argumentos: [
+      { titulo: "Transição planejada, com prazo", explicacao: "A mudança pode seguir um calendário combinado, com aviso antecipado e tudo feito do jeito certo. Apresentar [cronograma de transição Servis]." },
+      { titulo: "Outra função dentro do condomínio", explicacao: "Alguns condomínios mantêm o profissional de confiança em zeladoria ou manutenção. É uma possibilidade para avaliar caso a caso." },
+      { titulo: "A decisão é sobre o modelo, não sobre a pessoa", explicacao: "O síndico decide o melhor formato para todos os moradores pelos próximos anos. Isso não apaga o reconhecimento por quem trabalhou bem." },
+      { titulo: "Despedida com reconhecimento", explicacao: "Um comunicado respeitoso e um momento de agradecimento ajudam moradores e funcionário a viverem a mudança com dignidade." }
+    ],
+    falas: [
+      "Esse cuidado do senhor fala muito bem da sua gestão. A gente pode desenhar uma transição com prazo, sem surpresa para ninguém.",
+      "Tem condomínio que aproveita o porteiro de confiança em outra função, como zeladoria ou manutenção. Dá para avaliar isso aqui também.",
+      "A decisão não é contra uma pessoa. É sobre o melhor modelo para os moradores pelos próximos anos."
+    ],
+    pergunta_virada: "Se a gente encontrar um caminho respeitoso para ele, o que mais impede o condomínio de avançar?",
+    prova: "Modelo de [cronograma de transição Servis] e [contato de síndico referência] que passou por uma transição parecida.",
+    evitar: "Tratar o porteiro como um custo a ser cortado. Não pressione o síndico a agir contra os próprios valores, e não prometa recolocação que a Servis não oferece."
+  },
+  {
+    id: "encomendas",
+    categoria: "Operação do dia a dia",
+    titulo: "Quem vai receber as encomendas e as entregas?",
+    variacoes: ["e os pacotes", "chega muita coisa de compra pela internet", "o porteiro recebe tudo hoje", "e o delivery", "onde o entregador vai deixar"],
+    tags: ["encomenda", "encomendas", "entrega", "entregas", "pacote", "correio", "correspondência", "delivery", "comida", "entregador", "motoboy", "armário inteligente", "locker", "compras"],
+    por_tras: "Hoje o porteiro funciona como recebedor de tudo. O medo é de encomenda extraviada, entregador sem ter onde deixar e reclamação de morador chegando ao síndico.",
+    argumentos: [
+      { titulo: "Armário Inteligente", explicacao: "O entregador deposita a encomenda, o morador recebe um aviso com código e retira a qualquer hora, inclusive de madrugada." },
+      { titulo: "Registro de depósito e retirada", explicacao: "Cada encomenda fica rastreada: quando chegou, em qual porta e quando foi retirada." },
+      { titulo: "A central orienta o entregador", explicacao: "O entregador fala com a central, que libera o acesso só até o ponto de entrega. Ele não circula pelo condomínio." },
+      { titulo: "Menos responsabilidade de guarda para o condomínio", explicacao: "Quando um funcionário recebe e guarda pacotes, o condomínio responde por eles. Com o armário, o processo é direto entre entregador e morador." }
+    ],
+    falas: [
+      "Com o Armário Inteligente, o entregador deixa a encomenda, o morador recebe um aviso no celular e retira quando quiser, até de madrugada.",
+      "Cada depósito e cada retirada ficam registrados. Acaba aquela discussão de quem pegou o pacote.",
+      "O entregador fala com a central, e a central libera só o acesso até o armário. Ele não circula pelo condomínio."
+    ],
+    pergunta_virada: "Hoje, quando some uma encomenda aqui, como o senhor descobre o que aconteceu?",
+    prova: "Demonstração do Armário Inteligente com [vídeo ou visita a condomínio com armário instalado] e [contato de síndico referência].",
+    evitar: "Dizer que o armário resolve qualquer volume. Combine com clareza o [procedimento para volumes que não cabem no armário] e para entregas de comida."
+  },
+  {
+    id: "visitantes-prestadores",
+    categoria: "Operação do dia a dia",
+    titulo: "Como fica a entrada de visitantes, prestadores e diaristas?",
+    variacoes: ["e a minha diarista", "e o pessoal da obra", "visita vai ficar esperando no portão", "e o técnico da internet", "e a babá", "e o personal"],
+    tags: ["visitante", "visita", "prestador", "prestador de serviço", "diarista", "faxineira", "empregada", "babá", "cuidadora", "obra", "pedreiro", "técnico", "personal", "convidado", "festa", "liberação", "autorização", "aplicativo", "qr code"],
+    por_tras: "Medo de burocracia que trava a rotina: a diarista esperando no portão, o prestador sem conseguir entrar, o morador irritado ligando para o síndico.",
+    argumentos: [
+      { titulo: "Autorização prévia pelo morador", explicacao: "Visitas marcadas são liberadas antes pelo [aplicativo do morador Servis]. O visitante chega e entra conforme a autorização." },
+      { titulo: "Cadastro recorrente", explicacao: "Diaristas, babás e prestadores fixos ficam cadastrados com reconhecimento facial, nos dias e horários que o morador definir." },
+      { titulo: "Visitante sem aviso é confirmado", explicacao: "A central fala com o morador e só abre com a confirmação dele." },
+      { titulo: "Histórico de quem entrou", explicacao: "O síndico consulta quem entrou, quando e com autorização de quem." }
+    ],
+    falas: [
+      "A diarista que vem toda semana fica cadastrada com o rosto, nos dias e horários que o morador definir. Ela chega e entra.",
+      "Visita marcada, o morador libera antes pelo aplicativo. Visita sem aviso, a central liga para o morador e só abre com a confirmação dele.",
+      "Prestador de serviço segue a mesma regra, e o senhor consegue ver depois quem entrou e quando."
+    ],
+    pergunta_virada: "Quem mais entra aqui durante a semana sem ser morador? Vamos montar juntos o fluxo de cada um.",
+    prova: "Demonstrar o [aplicativo do morador Servis] liberando um visitante e mostrar um exemplo de [relatório de acessos].",
+    evitar: "Dizer que é tudo automático sem explicar a confirmação com o morador. Não prometa liberação sem verificação."
+  },
+  {
+    id: "esta-caro",
+    categoria: "Custo e contrato",
+    titulo: "Está caro",
+    variacoes: ["a outra empresa cobrou menos", "achei salgado", "não cabe no orçamento", "o concorrente fez mais barato", "a mensalidade é alta", "tem proposta mais em conta"],
+    tags: ["caro", "preço", "valor", "mensalidade", "orçamento", "barato", "desconto", "concorrente", "outra empresa", "outra proposta", "custo", "economia", "taxa condominial"],
+    por_tras: "O síndico precisa justificar o valor para o conselho e para os moradores. Muitas vezes compara só a mensalidade, sem enxergar o custo completo de hoje nem o que cada proposta entrega.",
+    argumentos: [
+      { titulo: "Custo total da portaria presencial", explicacao: "Além do salário, entram encargos, férias, décimo terceiro, folguistas, cobertura de faltas e o passivo trabalhista que cresce com o tempo." },
+      { titulo: "Simulação do próprio condomínio", explicacao: "A comparação certa usa os números reais do condomínio: [simulação de custo total do condomínio]." },
+      { titulo: "Comparar escopo, não só preço", explicacao: "Equipamentos, manutenção, central, contingência, implantação e atendimento. Duas propostas com valores diferentes raramente entregam a mesma coisa." },
+      { titulo: "O custo de uma falha", explicacao: "O que não está no papel aparece no dia em que o condomínio precisa: tempo de resposta, manutenção, plano de contingência." }
+    ],
+    falas: [
+      "Vamos comparar com o que o condomínio gasta hoje, de verdade: salário, encargos, férias, folguista, cobertura de falta. Na simulação do seu condomínio, isso dá [custo atual estimado na simulação].",
+      "Sobre a outra proposta, eu não vou comentar a empresa. Só peço que o senhor coloque lado a lado o que cada uma entrega: equipamentos, manutenção, contingência, tempo de resposta.",
+      "Às vezes a diferença na mensalidade está exatamente no que não aparece no papel. E só aparece no dia em que o senhor precisa."
+    ],
+    pergunta_virada: "Se as duas propostas entregassem exatamente a mesma coisa, o preço decidiria. Elas entregam a mesma coisa? Vamos conferir item por item?",
+    prova: "Apresentar a [simulação de custo total do condomínio] e uma [planilha de comparação de escopo entre propostas] para o síndico preencher com as propostas que recebeu.",
+    evitar: "Falar mal da proposta concorrente ou usar frases prontas como “o barato sai caro”. Não invente valores de mercado nem percentuais de economia."
+  },
+  {
+    id: "custo-rescisao",
+    categoria: "Custo e contrato",
+    titulo: "E o custo da rescisão dos porteiros?",
+    variacoes: ["a rescisão vai sair muito cara", "não temos caixa para demitir", "a multa dos funcionários é alta", "o fundo de reserva não aguenta", "vamos gastar uma fortuna para mudar"],
+    tags: ["rescisão", "demissão", "verbas rescisórias", "multa", "fgts", "trabalhista", "caixa", "fundo de reserva", "desembolso", "passivo", "funcionários", "transição"],
+    por_tras: "Medo de um desembolso alto de uma vez, que o caixa não suporta, e de o síndico ser cobrado pelos moradores por essa despesa.",
+    argumentos: [
+      { titulo: "A rescisão é um passivo que já existe", explicacao: "Esse valor já está acumulado hoje, só não aparece no boleto do mês. E cresce enquanto o contrato de trabalho continua." },
+      { titulo: "Planejamento da transição", explicacao: "Um cronograma permite organizar o caixa com antecedência. Avaliar [condições comerciais Servis para o período de transição]." },
+      { titulo: "Retorno calculado", explicacao: "A simulação mostra em quanto tempo a mudança compensa o desembolso: [prazo de retorno na simulação do condomínio]." },
+      { titulo: "Números feitos por quem cuida da folha", explicacao: "O cálculo da rescisão deve ser feito com a administradora ou o contador do condomínio, com base na folha real." }
+    ],
+    falas: [
+      "Esse custo já existe hoje. Ele só não aparece na conta do mês. E quanto mais tempo passa, maior ele fica.",
+      "A gente monta junto um cronograma da transição, para o condomínio se planejar sem susto.",
+      "Na simulação do seu condomínio, a mudança se paga em [prazo de retorno na simulação do condomínio]. Eu deixo a conta aberta para o conselho e a administradora conferirem."
+    ],
+    pergunta_virada: "Se o valor da rescisão couber no planejamento do condomínio, essa ainda seria a principal preocupação?",
+    prova: "[Simulação de rescisão e retorno do condomínio] feita com a administradora ou o contador, e as [condições comerciais Servis para o período de transição].",
+    evitar: "Calcular rescisão de cabeça ou dar valores sem a folha real. Não dê orientação jurídica trabalhista: indique o contador ou o jurídico do condomínio."
+  },
+  {
+    id: "contrato-longo",
+    categoria: "Custo e contrato",
+    titulo: "O contrato é muito longo, não quero ficar preso",
+    variacoes: ["prazo muito grande", "e se eu não gostar", "não quero fidelidade", "e se o próximo síndico não quiser", "multa para sair"],
+    tags: ["contrato", "prazo", "fidelidade", "longo", "preso", "multa", "rescisão contratual", "cancelamento", "saída", "cláusula", "compromisso", "próximo síndico", "mandato"],
+    por_tras: "Medo de ficar preso a um serviço ruim, sem saída. Também há o receio de deixar um compromisso pesado para o próximo síndico.",
+    argumentos: [
+      { titulo: "O prazo existe por causa do investimento", explicacao: "A Servis instala equipamentos no condomínio. O prazo é o que permite diluir esse investimento em uma mensalidade viável." },
+      { titulo: "Compromisso de nível de serviço", explicacao: "O contrato define o que a Servis entrega: [indicadores de atendimento previstos em contrato]." },
+      { titulo: "Condições de saída claras", explicacao: "As regras estão escritas e podem ser lidas com calma: [condições de rescisão do contrato Servis]." },
+      { titulo: "Acompanhamento durante todo o contrato", explicacao: "Reuniões periódicas e relatórios mantêm o síndico informado sobre a operação: [rotina de acompanhamento do condomínio]." }
+    ],
+    falas: [
+      "O prazo existe porque a Servis investe nos equipamentos do seu condomínio. É ele que permite essa mensalidade.",
+      "O que deixa o senhor tranquilo não é contrato curto, é contrato com compromisso. Vou mostrar o que a gente se compromete a entregar.",
+      "As condições de saída estão escritas. Eu quero que o senhor leia com calma, junto com o conselho."
+    ],
+    pergunta_virada: "O que precisaria estar escrito no contrato para o senhor se sentir confortável com esse prazo?",
+    prova: "Minuta do contrato com os [indicadores de atendimento previstos em contrato] e as [condições de rescisão do contrato Servis] destacados.",
+    evitar: "Esconder cláusulas ou dizer que é padrão e não precisa se preocupar. Não prometa condições que não estão no contrato."
+  },
+  {
+    id: "experiencia-ruim",
+    categoria: "Confiança e relacionamento",
+    titulo: "Já tivemos portaria remota e foi ruim",
+    variacoes: ["já testamos e voltamos para o porteiro", "deu muito problema", "os moradores odiaram", "foi uma dor de cabeça", "não funcionou aqui"],
+    tags: ["experiência ruim", "já tivemos", "não funcionou", "voltamos", "trauma", "problema", "frustração", "outra empresa", "reclamação", "tentativa anterior"],
+    por_tras: "Frustração real e medo de errar de novo. O síndico, ou quem estava antes dele, pode ter sido muito cobrado pelos moradores pela escolha anterior.",
+    argumentos: [
+      { titulo: "Entender antes de propor", explicacao: "Ouvir o que deu errado mostra respeito e revela exatamente o que a proposta precisa responder." },
+      { titulo: "A diferença está na operação", explicacao: "Portaria remota é projeto, central, contingência e implantação. Quando um desses falha, a experiência inteira fica ruim." },
+      { titulo: "Implantação acompanhada", explicacao: "A virada é planejada e acompanhada de perto: [processo de implantação Servis]." },
+      { titulo: "Referência de quem já passou por isso", explicacao: "Conversar com um síndico que trocou de modelo e ficou satisfeito vale mais que qualquer argumento." }
+    ],
+    falas: [
+      "Eu quero entender o que aconteceu. O que mais incomodou os moradores naquela época?",
+      "Portaria remota não é só equipamento. É projeto, é central, é processo. Quando um desses falha, a experiência inteira fica ruim.",
+      "Para cada ponto que o senhor me contar, eu vou mostrar como a nossa operação trata. Se algum não tiver resposta, eu digo para o senhor."
+    ],
+    pergunta_virada: "Se aqueles problemas não tivessem acontecido, o senhor teria mantido a portaria remota?",
+    prova: "Visita à central, apresentação do [processo de implantação Servis] e [contato de síndico referência que migrou de outra portaria remota].",
+    evitar: "Culpar ou criticar a empresa anterior. Não diga que com a Servis vai ser diferente sem mostrar como."
+  },
+  {
+    id: "central-demora",
+    categoria: "Tecnologia e contingência",
+    titulo: "A central demora para atender",
+    variacoes: ["fica muito tempo esperando no portão", "o interfone toca e ninguém atende", "ouvi dizer que demora", "meu amigo espera muito no prédio dele", "a fila da central é grande"],
+    tags: ["demora", "espera", "tempo de atendimento", "lento", "central", "fila", "interfone", "ninguém atende", "agilidade", "rapidez", "atendimento"],
+    por_tras: "Experiência ou relato de espera no portão. O morador perde a paciência, se sente exposto do lado de fora e reclama com o síndico.",
+    argumentos: [
+      { titulo: "Atendimento medido todos os dias", explicacao: "O tempo de atendimento é um indicador acompanhado: [tempo médio de atendimento da central Servis]." },
+      { titulo: "Posições dimensionadas", explicacao: "A central é dimensionada para a carteira de condomínios e para os horários de pico: [critério de dimensionamento da central]." },
+      { titulo: "Menos chamadas para a central", explicacao: "Morador entra com facial ou tag, visitas são liberadas antes pelo aplicativo. A central atende quem realmente precisa." },
+      { titulo: "Prioridade para situações críticas", explicacao: "Chamadas de emergência e situações de risco são tratadas com prioridade: [procedimento de priorização de chamadas]." }
+    ],
+    falas: [
+      "A gente mede isso todo dia. Hoje o tempo médio de atendimento da nossa central é [tempo médio de atendimento da central Servis].",
+      "E o morador quase não precisa chamar a central: ele entra com o rosto ou com a tag. A central fica livre para quem precisa.",
+      "Eu quero que o senhor veja ao vivo. Venha à central e acompanhe os atendimentos."
+    ],
+    pergunta_virada: "Qual seria um tempo de atendimento aceitável para os moradores daqui? Vamos colocar isso como referência na proposta.",
+    prova: "Visita à central em horário de movimento e [relatório de indicadores de atendimento da central].",
+    evitar: "Prometer atendimento imediato ou um tempo que não está medido. Não culpe o morador pela espera."
+  },
+  {
+    id: "clonagem-carona",
+    categoria: "Tecnologia e contingência",
+    titulo: "E se clonarem a tag ou alguém entrar de carona atrás do morador?",
+    variacoes: ["dá para copiar o cartão", "a pessoa entra colada no carro", "e se roubarem a tag", "alguém entra junto com o morador", "o morador empresta a tag"],
+    tags: ["tag", "cartão", "chaveiro", "clonar", "clonagem", "cópia", "carona", "entrar junto", "colado", "roubo", "perda", "bloqueio", "clausura", "intertravamento", "eclusa", "fraude", "invasão"],
+    por_tras: "Medo de que a tecnologia tenha brechas que alguém mal intencionado possa explorar, e de que o investimento não proteja de verdade.",
+    argumentos: [
+      { titulo: "Reconhecimento facial não se empresta", explicacao: "O acesso é o próprio rosto do morador. Não há cartão para emprestar, perder ou copiar." },
+      { titulo: "Tags com bloqueio imediato", explicacao: "Tag perdida ou roubada é bloqueada pela central na hora. As tags usam [tecnologia de proteção das tags e leitores]." },
+      { titulo: "Clausura contra carona", explicacao: "Com intertravamento, o segundo portão só abre quando o primeiro fecha. Quem tenta entrar junto fica retido entre os dois." },
+      { titulo: "Câmeras e central atentas", explicacao: "A central acompanha os acessos pelas câmeras e age diante de comportamento fora do padrão: [procedimento da central para entrada não autorizada]." }
+    ],
+    falas: [
+      "Com reconhecimento facial, o acesso é o próprio rosto do morador. Não tem cartão para emprestar nem para copiar.",
+      "Se uma tag for perdida, a central bloqueia na hora. Ela deixa de abrir qualquer porta.",
+      "Para a carona, o projeto usa clausura: o segundo portão só abre depois que o primeiro fecha. E a central acompanha pelas câmeras."
+    ],
+    pergunta_virada: "Hoje, se um morador perde a chave ou o controle do portão, o que o condomínio faz?",
+    prova: "Demonstrar o bloqueio de uma tag em tempo real, mostrar a clausura no projeto e apresentar a [especificação técnica das tags e leitores].",
+    evitar: "Dizer que o sistema é impossível de burlar. Não detalhe para o cliente como fraudes são feitas."
+  },
+  {
+    id: "privacidade-lgpd",
+    categoria: "Tecnologia e contingência",
+    titulo: "Câmeras e reconhecimento facial invadem a privacidade dos moradores",
+    variacoes: ["não quero minha cara cadastrada", "quem vai ver essas imagens", "isso não fere a LGPD", "vão vigiar a vida dos moradores", "biometria é dado sensível"],
+    tags: ["privacidade", "lgpd", "dados", "dados pessoais", "biometria", "rosto", "imagem", "câmera", "câmeras", "vigilância", "exposição", "consentimento", "lei", "vazamento", "facial"],
+    por_tras: "Receio de exposição dos moradores, de uso indevido das imagens e do cadastro facial, e da responsabilidade do condomínio diante da lei.",
+    argumentos: [
+      { titulo: "Finalidade definida", explicacao: "A LGPD pede finalidade clara e cuidado com os dados. Aqui a finalidade é uma só: controlar acessos e proteger os moradores." },
+      { titulo: "Acesso restrito e registrado", explicacao: "Imagens e cadastros ficam com acesso controlado, e cada consulta deixa registro: [política de privacidade e tratamento de dados Servis]." },
+      { titulo: "Câmeras só em áreas comuns", explicacao: "O projeto cobre entradas, garagens e áreas comuns. Nada dentro das unidades." },
+      { titulo: "Transparência com os moradores", explicacao: "Comunicado claro, sinalização e orientação sobre o cadastro facial ajudam o condomínio a cumprir seu papel com tranquilidade." }
+    ],
+    falas: [
+      "A LGPD pede finalidade clara e cuidado com os dados. A finalidade aqui é uma só: controlar quem entra e proteger quem mora.",
+      "As imagens e o cadastro facial ficam com acesso restrito. Nem todo mundo vê, e cada acesso fica registrado.",
+      "As câmeras cobrem áreas comuns, nada dentro das unidades. E a gente ajuda o condomínio a comunicar isso com clareza aos moradores."
+    ],
+    pergunta_virada: "Que tipo de uso das imagens preocuparia os moradores? Vamos deixar por escrito o que pode e o que não pode.",
+    prova: "Apresentar a [política de privacidade e tratamento de dados Servis] e o [modelo de comunicado aos moradores sobre câmeras e biometria].",
+    evitar: "Citar artigos ou números de lei, ou dar parecer jurídico. Não trate a preocupação como exagero: privacidade é um tema legítimo."
+  },
+  {
+    id: "porteiro-multitarefa",
+    categoria: "Pessoas e transição",
+    titulo: "O porteiro faz outras coisas aqui: recebe correspondência, ajuda na limpeza",
+    variacoes: ["ele quebra muito galho", "ele ajuda na manutenção", "ele cuida da piscina", "ele separa as cartas", "quem vai fazer o que ele faz"],
+    tags: ["multitarefa", "outras funções", "limpeza", "manutenção", "correspondência", "cartas", "zeladoria", "zelador", "piscina", "lixo", "jardim", "quebra galho", "tarefas", "rotina"],
+    por_tras: "Medo de perder serviços que hoje parecem vir de graça e de que tarefas fiquem sem ninguém. O síndico teme ter de resolver tudo sozinho depois.",
+    argumentos: [
+      { titulo: "Portaria e zeladoria são funções diferentes", explicacao: "Quando o porteiro sai do posto para ajudar em outra tarefa, o portão fica sem atenção. Separar as funções protege as duas." },
+      { titulo: "Correspondência e encomendas no Armário Inteligente", explicacao: "O recebimento passa a ter processo próprio, com registro de depósito e retirada." },
+      { titulo: "Mapeamento das rotinas", explicacao: "Cada tarefa atual é listada e recebe um responsável: zelador, empresa de limpeza, Armário Inteligente ou central." },
+      { titulo: "Atenção constante no acesso", explicacao: "Na portaria remota, o controle de acesso não para porque alguém precisou resolver outra coisa." }
+    ],
+    falas: [
+      "Hoje, quando o porteiro está ajudando na limpeza, quem está cuidando do portão?",
+      "Na portaria remota, o portão tem atenção o tempo todo. As outras tarefas a gente organiza: zeladoria fica com o zelador, encomenda vai para o Armário Inteligente.",
+      "Vamos listar juntos tudo o que ele faz hoje. Para cada item, eu mostro quem passa a fazer."
+    ],
+    pergunta_virada: "Se o senhor fosse listar as tarefas do porteiro hoje, qual delas mais preocupa perder?",
+    prova: "Preencher com o síndico o [roteiro de mapeamento de rotinas do condomínio] e demonstrar o Armário Inteligente.",
+    evitar: "Desvalorizar as tarefas extras do porteiro ou dizer que não são importantes. Não prometa que a Servis assume funções que não estão no escopo."
+  },
+  {
+    id: "condominio-pequeno",
+    categoria: "Perfil do condomínio",
+    titulo: "Nosso condomínio é pequeno, não compensa",
+    variacoes: ["aqui são poucos apartamentos", "é só um prediozinho", "isso é para condomínio grande", "não vale o investimento para a gente", "somos poucos moradores"],
+    tags: ["pequeno", "poucas unidades", "poucos apartamentos", "prédio pequeno", "compensa", "vale a pena", "investimento", "rateio", "custo por unidade", "taxa condominial"],
+    por_tras: "A crença de que portaria remota é coisa de condomínio grande e de que o investimento não se justifica para poucas unidades.",
+    argumentos: [
+      { titulo: "No condomínio pequeno o custo pesa mais por unidade", explicacao: "O custo de manter porteiro em todos os turnos é dividido entre poucas unidades. Cada mudança aparece com força no boleto de cada morador." },
+      { titulo: "Projeto do tamanho do condomínio", explicacao: "Os equipamentos são definidos para os acessos que existem. Não há estrutura sobrando." },
+      { titulo: "A mesma central do condomínio grande", explicacao: "O condomínio pequeno passa a contar com atendimento vinte e quatro horas e a mesma operação de um condomínio de grande porte." },
+      { titulo: "Conta feita com números reais", explicacao: "A resposta para compensa ou não vem da [simulação de custo por unidade do condomínio]." }
+    ],
+    falas: [
+      "Num condomínio pequeno, o custo de um porteiro por turno é dividido entre poucas unidades. É justamente aí que cada mudança pesa mais no boleto de cada morador.",
+      "O projeto é do tamanho do seu condomínio. Não tem equipamento sobrando.",
+      "E o condomínio pequeno passa a ter a mesma central, vinte e quatro horas, que um condomínio grande."
+    ],
+    pergunta_virada: "Quanto cada unidade paga hoje só para manter a portaria? Vamos fazer essa conta juntos.",
+    prova: "Apresentar a [simulação de custo por unidade do condomínio] e o [contato de síndico referência] de condomínio pequeno.",
+    evitar: "Prometer economia antes da simulação. Não diga que todo condomínio compensa: mostre a conta deste."
+  },
+  {
+    id: "criancas",
+    categoria: "Perfil do condomínio",
+    titulo: "Tem muita criança no condomínio",
+    variacoes: ["as crianças brincam no pátio", "e se uma criança sair sozinha", "os pais vão ficar preocupados", "criança vai abrir o portão para estranho", "aqui é cheio de família"],
+    tags: ["criança", "crianças", "filhos", "menores", "menor de idade", "adolescente", "família", "pais", "brincar", "playground", "parquinho", "pátio", "saída sozinha", "escola"],
+    por_tras: "Medo de criança sair sozinha pelo portão, de alguém entrar enquanto elas brincam e de não haver mais um adulto por perto como referência.",
+    argumentos: [
+      { titulo: "Portão que não fica aberto", explicacao: "Com controle de acesso, o portão fecha sozinho. Se ficar aberto, a central é avisada: [recurso de alarme de portão aberto]." },
+      { titulo: "Regras de acesso definidas pelos pais", explicacao: "O cadastro de menores pode seguir regras escolhidas pelos responsáveis: [recursos de perfil de acesso para menores]." },
+      { titulo: "Ninguém de fora entra sem confirmação", explicacao: "Visitante só entra com autorização de um morador, o que protege as áreas comuns onde as crianças ficam." },
+      { titulo: "Câmeras nas áreas comuns", explicacao: "Entradas e áreas comuns ficam registradas, e a central acompanha os acessos." }
+    ],
+    falas: [
+      "Com controle de acesso, o portão não fica aberto. Ele fecha sozinho e, se ficar aberto, a central é avisada.",
+      "Os pais podem definir regras para o cadastro dos filhos, como [recursos de perfil de acesso para menores]. A gente mostra as opções na implantação.",
+      "E ninguém de fora entra sem a confirmação de um morador. Isso protege as crianças que estão brincando na área comum."
+    ],
+    pergunta_virada: "Qual situação com as crianças mais preocupa os pais daqui? Vamos ver como o projeto trata cada uma.",
+    prova: "Demonstrar os [recursos de perfil de acesso para menores] e o [recurso de alarme de portão aberto], com [contato de síndico referência] de condomínio com perfil familiar.",
+    evitar: "Dizer que a central toma conta das crianças: a responsabilidade dos pais continua. Não use cenários assustadores para convencer."
+  },
+  {
+    id: "vou-pensar-conselho",
+    categoria: "Decisão e processo",
+    titulo: "Vou levar para o conselho",
+    variacoes: ["vou pensar", "preciso conversar com os conselheiros", "deixa eu ver com calma", "me manda a proposta que eu vejo", "agora não é o momento", "depois eu te retorno"],
+    tags: ["pensar", "conselho", "conselheiros", "decisão", "depois", "retorno", "calma", "proposta", "adiar", "momento", "sem pressa", "subsíndico"],
+    por_tras: "Pode ser um processo legítimo ou uma dúvida que não foi dita. Muitas vezes o síndico não se sente preparado para defender a proposta sozinho diante do conselho.",
+    argumentos: [
+      { titulo: "Descobrir a dúvida real", explicacao: "Uma pergunta aberta revela o que ainda falta para o síndico se sentir confiante na decisão." },
+      { titulo: "Facilitar a vida do síndico", explicacao: "Um material curto, com custo, escopo e transição, ajuda o síndico a apresentar a proposta sem depender da memória." },
+      { titulo: "Estar presente na reunião", explicacao: "Responder às perguntas do conselho na hora evita que dúvidas virem objeções sem resposta." },
+      { titulo: "Próximo passo com data", explicacao: "Sair da conversa com uma data combinada mantém o assunto vivo e respeita o tempo do condomínio." }
+    ],
+    falas: [
+      "Claro, é uma decisão importante. Posso perguntar: o que o senhor ainda gostaria de entender melhor antes de levar ao conselho?",
+      "Eu preparo um resumo de uma página com custo, escopo e transição, para facilitar a conversa com os conselheiros.",
+      "Se fizer sentido, eu vou junto à reunião para responder às perguntas na hora. Quando o conselho se reúne?"
+    ],
+    pergunta_virada: "Se o conselho perguntar qual é o principal motivo para mudar, o que o senhor responderia?",
+    prova: "[Resumo executivo da proposta em uma página] e convite para os conselheiros visitarem a central.",
+    evitar: "Pressionar por resposta imediata ou oferecer desconto que vale só hoje. Não saia da conversa sem uma data de retorno combinada."
+  },
+  {
+    id: "assembleia-nao-aprova",
+    categoria: "Decisão e processo",
+    titulo: "A assembleia não vai aprovar",
+    variacoes: ["os moradores não vão aceitar", "já tentamos levar e foi rejeitado", "vai dar briga na assembleia", "tem um grupo que é contra tudo", "não vou conseguir quórum"],
+    tags: ["assembleia", "aprovação", "votação", "quórum", "moradores", "rejeição", "resistência", "conflito", "briga", "oposição", "convocação", "apresentação", "edital"],
+    por_tras: "Medo de exposição, de conflito com moradores e de uma derrota pública. O síndico não quer gastar o capital político dele em uma proposta que pode ser recusada.",
+    argumentos: [
+      { titulo: "Apoio na apresentação em assembleia", explicacao: "A Servis vai à assembleia, apresenta a proposta e responde às perguntas dos moradores. O síndico não defende o projeto sozinho." },
+      { titulo: "Preparar o terreno antes", explicacao: "Conversa prévia com conselheiros e moradores de influência, comunicado antecipado e visita à central reduzem a resistência no dia." },
+      { titulo: "Responder antes que perguntem", explicacao: "As dúvidas mais comuns são levantadas com o síndico e já entram na apresentação." },
+      { titulo: "Material para o morador", explicacao: "Um comunicado claro e objetivo ajuda o morador a chegar à assembleia informado: [modelo de comunicado aos moradores]." }
+    ],
+    falas: [
+      "O senhor não precisa defender isso sozinho. A Servis vai à assembleia, apresenta e responde às perguntas dos moradores.",
+      "Antes da assembleia, a gente prepara um comunicado e convida alguns moradores para conhecer a central. Quem conhece chega com outra visão.",
+      "Quais perguntas o senhor já sabe que vão aparecer? A gente prepara a resposta de cada uma."
+    ],
+    pergunta_virada: "Quem são os moradores com mais influência nas assembleias daqui? Faz sentido conversarmos com eles antes?",
+    prova: "[Apresentação padrão Servis para assembleia], [modelo de comunicado aos moradores] e [contato de síndico referência que aprovou em assembleia].",
+    evitar: "Falar dos moradores como resistentes ou da assembleia como obstáculo. Não prometa resultado de votação."
+  }
+];
+/* ========================== FIM DA BASE ================================= */
+
+
+/* ==========================================================================
+   LÓGICA DA APLICAÇÃO (não é preciso editar para mudar o conteúdo)
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  var KEYS = {
+    favoritos: 'servisObj.favoritos',
+    tema: 'servisObj.tema',
+    reuniao: 'servisObj.reuniao',
+    registros: 'servisObj.registros',
+    base: 'servisObj.base'
+  };
+
+  /* ---------- Armazenamento tolerante a falhas ---------- */
+  var memoria = {};
+  var armazenamentoOk = (function () {
+    try {
+      var k = 'servisObj.__teste';
+      localStorage.setItem(k, '1');
+      localStorage.removeItem(k);
+      return true;
+    } catch (e) { return false; }
+  })();
+  var store = {
+    get: function (k, padrao) {
+      if (k in memoria) return memoria[k];
+      try {
+        var v = localStorage.getItem(k);
+        return v === null ? padrao : JSON.parse(v);
+      } catch (e) { return padrao; }
+    },
+    set: function (k, v) {
+      memoria[k] = v;
+      try { localStorage.setItem(k, JSON.stringify(v)); return true; }
+      catch (e) { return false; }
+    },
+    remove: function (k) {
+      delete memoria[k];
+      try { localStorage.removeItem(k); } catch (e) {}
+    }
+  };
+
+  /* ---------- Utilidades ---------- */
+  function $(s) { return document.querySelector(s); }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function texto(s) {
+    return esc(s).replace(/\[([^\]]+)\]/g, '<mark class="ph">[$1]</mark>');
+  }
+  function normalizar(s) {
+    return String(s == null ? '' : s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+  function hoje() { return new Date().toISOString().slice(0, 10); }
+  function isDesktop() { return window.matchMedia('(min-width: 1024px)').matches; }
+  function str(v) { return typeof v === 'string' ? v : (v == null ? '' : String(v)); }
+  function listaStr(v) { return Array.isArray(v) ? v.map(str).filter(function (x) { return x.trim() !== ''; }) : []; }
+
+  var ICON = {
+    star: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>',
+    copy: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>',
+    check: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
+    back: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>',
+    trash: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    moon: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>'
+  };
+
+  /* ---------- Validação da base (usada na importação) ---------- */
+  function validarBase(dados) {
+    var arr = Array.isArray(dados) ? dados : (dados && Array.isArray(dados.objecoes) ? dados.objecoes : null);
+    if (!arr) throw new Error('O arquivo não contém uma lista de objeções.');
+    if (!arr.length) throw new Error('A lista de objeções está vazia.');
+    var ids = {};
+    return arr.map(function (o, i) {
+      var n = i + 1;
+      if (!o || typeof o !== 'object' || Array.isArray(o)) throw new Error('O item ' + n + ' não é uma objeção válida.');
+      var id = str(o.id).trim();
+      if (!id) throw new Error('A objeção ' + n + ' está sem id.');
+      if (ids[id]) throw new Error('O id "' + id + '" aparece mais de uma vez.');
+      ids[id] = true;
+      if (!str(o.titulo).trim()) throw new Error('A objeção "' + id + '" está sem título.');
+      var limpo = {};
+      for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) limpo[k] = o[k];
+      limpo.id = id;
+      limpo.categoria = str(o.categoria).trim() || 'Sem categoria';
+      limpo.titulo = str(o.titulo);
+      limpo.variacoes = listaStr(o.variacoes);
+      limpo.tags = listaStr(o.tags);
+      limpo.por_tras = str(o.por_tras);
+      limpo.argumentos = Array.isArray(o.argumentos) ? o.argumentos.map(function (a) {
+        if (typeof a === 'string') return { titulo: a, explicacao: '' };
+        return { titulo: str(a && a.titulo), explicacao: str(a && a.explicacao) };
+      }) : [];
+      limpo.falas = listaStr(o.falas);
+      limpo.pergunta_virada = str(o.pergunta_virada);
+      limpo.prova = str(o.prova);
+      limpo.evitar = str(o.evitar);
+      return limpo;
+    });
+  }
+
+  /* ---------- Estado ---------- */
+  var state = {
+    base: [],
+    origem: 'codigo',
+    importadoEm: null,
+    indice: {},
+    query: '',
+    cat: 'todas',
+    favoritos: [],
+    registros: [],
+    selecionado: null,
+    view: 'list',
+    scrollLista: 0,
+    prefill: '',
+    rota: '#/',
+    historico: 0,
+    veioDaLista: false
+  };
+
+  function carregarBase() {
+    var salva = store.get(KEYS.base, null);
+    if (salva && salva.objecoes) {
+      try {
+        state.base = validarBase(salva.objecoes);
+        state.origem = 'importada';
+        state.importadoEm = salva.importado_em || null;
+        indexar();
+        return;
+      } catch (e) { /* base salva inválida: volta para a original */ }
+    }
+    state.base = validarBase(OBJECOES);
+    state.origem = 'codigo';
+    state.importadoEm = null;
+    indexar();
+  }
+
+  function indexar() {
+    state.indice = {};
+    state.base.forEach(function (o, i) {
+      state.indice[o.id] = {
+        ordem: i,
+        titulo: normalizar(o.titulo),
+        variacoes: normalizar(o.variacoes.join(' | ')),
+        tudo: normalizar([o.titulo, o.variacoes.join(' '), o.tags.join(' '), o.categoria].join(' | '))
+      };
+    });
+  }
+
+  function porId(id) {
+    for (var i = 0; i < state.base.length; i++) if (state.base[i].id === id) return state.base[i];
+    return null;
+  }
+
+  function categorias() {
+    var vistas = [], cont = {};
+    state.base.forEach(function (o) {
+      if (!(o.categoria in cont)) { cont[o.categoria] = 0; vistas.push(o.categoria); }
+      cont[o.categoria]++;
+    });
+    return vistas.map(function (c) { return { nome: c, n: cont[c] }; });
+  }
+
+  /* ---------- Busca ---------- */
+  function contem(hay, palavra) {
+    if (hay.indexOf(palavra) !== -1) return true;
+    // plural simples: "velhinhos" encontra "velhinho"
+    if (palavra.length > 4 && palavra.charAt(palavra.length - 1) === 's') return hay.indexOf(palavra.slice(0, -1)) !== -1;
+    return false;
+  }
+
+  function filtrar() {
+    var q = normalizar(state.query).trim();
+    var palavras = q.split(/\s+/).filter(Boolean);
+    var favs = state.favoritos;
+    var lista = state.base.filter(function (o) {
+      if (state.cat === 'favoritos' && favs.indexOf(o.id) === -1) return false;
+      if (state.cat !== 'todas' && state.cat !== 'favoritos' && o.categoria !== state.cat) return false;
+      if (!palavras.length) return true;
+      var hay = state.indice[o.id].tudo;
+      return palavras.every(function (p) { return contem(hay, p); });
+    });
+    if (palavras.length) {
+      lista = lista.map(function (o) {
+        var ix = state.indice[o.id], s = 0;
+        if (ix.titulo.indexOf(q) !== -1) s += 4;
+        if (ix.variacoes.indexOf(q) !== -1) s += 2;
+        palavras.forEach(function (p) { if (contem(ix.titulo, p)) s += 1; });
+        return { o: o, s: s, ordem: ix.ordem };
+      }).sort(function (a, b) { return b.s - a.s || a.ordem - b.ordem; }).map(function (x) { return x.o; });
+    }
+    return lista;
+  }
+
+  /* ---------- Renderização da lista ---------- */
+  function renderChips() {
+    var favN = state.favoritos.filter(function (id) { return porId(id); }).length;
+    var itens = [{ id: 'todas', nome: 'Todas', n: state.base.length }, { id: 'favoritos', nome: 'Meus favoritos', n: favN }]
+      .concat(categorias().map(function (c) { return { id: c.nome, nome: c.nome, n: c.n }; }));
+    if (state.cat !== 'todas' && state.cat !== 'favoritos' && !itens.some(function (c) { return c.id === state.cat; })) state.cat = 'todas';
+    $('#chips').innerHTML = itens.map(function (c) {
+      return '<button type="button" class="chip" data-act="cat" data-cat="' + esc(c.id) + '" aria-pressed="' + (state.cat === c.id) + '">' +
+        esc(c.nome) + ' <span class="n">' + c.n + '</span></button>';
+    }).join('');
+  }
+
+  function renderLista() {
+    var lista = filtrar();
+    var favs = state.favoritos;
+    $('#lista').innerHTML = lista.map(function (o) {
+      var fav = favs.indexOf(o.id) !== -1;
+      return '<li><a class="card" href="#/o/' + encodeURIComponent(o.id) + '" data-id="' + esc(o.id) + '"' +
+        (state.selecionado === o.id && state.view === 'detail' ? ' aria-current="true"' : '') + '>' +
+        '<span class="card-cat">' + esc(o.categoria) + '</span>' +
+        '<span class="card-title">“' + esc(o.titulo) + '”</span></a>' +
+        '<button type="button" class="star" data-act="fav" data-id="' + esc(o.id) + '" aria-pressed="' + fav + '" aria-label="' +
+        (fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos') + '">' + ICON.star + '</button></li>';
+    }).join('');
+
+    var q = state.query.trim();
+    var n = lista.length;
+    var status;
+    if (state.cat === 'favoritos' && !q && !n) status = 'Você ainda não marcou favoritos. Toque na estrela de um card.';
+    else if (q) status = n ? (n === 1 ? '1 resultado' : n + ' resultados') + ' para “' + q + '”' : '';
+    else status = n === 1 ? '1 objeção' : n + ' objeções';
+    $('#status').textContent = status;
+    $('#vazio').hidden = !(q && !n);
+    $('#btnLimpar').hidden = !state.query;
+  }
+
+  /* ---------- Renderização do detalhe ---------- */
+  function secao(classe, num, titulo, corpo, id) {
+    return '<section class="sec ' + classe + '" id="' + id + '"><h2><span class="num"><span>' + num + '</span></span>' + titulo + '</h2>' + corpo + '</section>';
+  }
+  function botaoCopiar(txt) {
+    return '<button type="button" class="copy" data-act="copiar" data-texto="' + esc(txt) + '" aria-label="Copiar fala">' +
+      ICON.copy + '<span class="lbl">Copiar</span></button>';
+  }
+
+  function renderDetalhe(o) {
+    var fav = state.favoritos.indexOf(o.id) !== -1;
+    var h = '';
+    h += '<div class="view-bar">' +
+      '<button class="back" type="button" data-act="voltar">' + ICON.back + 'Voltar</button>' +
+      '<span class="spacer"></span>' +
+      '<button type="button" class="bar-btn" data-act="fav" data-id="' + esc(o.id) + '" aria-pressed="' + fav + '" aria-label="' +
+      (fav ? 'Remover dos favoritos' : 'Adicionar aos favoritos') + '">' + ICON.star + '<span>' + (fav ? 'Favorito' : 'Favoritar') + '</span></button>' +
+      '</div>';
+    h += '<header class="d-head"><div class="d-cat">' + esc(o.categoria) + '<span class="meeting-tag">Modo Reunião</span></div>' +
+      '<h1 class="d-title" id="dTitulo" tabindex="-1">“' + esc(o.titulo) + '”</h1>' +
+      (o.variacoes.length ? '<p class="d-var">Também aparece como: ' + o.variacoes.map(function (v) { return '“' + esc(v) + '”'; }).join(', ') + '</p>' : '') +
+      '</header>';
+    h += '<nav class="jump" aria-label="Ir para a seção">' +
+      '<button type="button" data-act="ir" data-alvo="s-falas">Falas prontas</button>' +
+      '<button type="button" data-act="ir" data-alvo="s-virada">Pergunta de virada</button>' +
+      '<button type="button" data-act="ir" data-alvo="s-prova">Prova</button>' +
+      '<button type="button" data-act="ir" data-alvo="s-evitar">Evitar</button></nav>';
+
+    if (o.por_tras) h += secao('sec-portras', 1, 'O que está por trás', '<p>' + texto(o.por_tras) + '</p>', 's-portras');
+    if (o.argumentos.length) h += secao('sec-args', 2, 'Linhas de argumentação', '<ul class="args">' + o.argumentos.map(function (a) {
+      return '<li><strong>' + texto(a.titulo) + '</strong>' + (a.explicacao ? '<span>' + texto(a.explicacao) + '</span>' : '') + '</li>';
+    }).join('') + '</ul>', 's-args');
+    if (o.falas.length) h += secao('sec-falas', 3, 'Falas prontas', '<ul class="falas">' + o.falas.map(function (f) {
+      return '<li class="fala"><p>' + texto(f) + '</p>' + botaoCopiar(f) + '</li>';
+    }).join('') + '</ul>', 's-falas');
+    if (o.pergunta_virada) h += secao('sec-virada', 4, 'Pergunta de virada', '<div class="virada"><p>' + texto(o.pergunta_virada) + '</p>' + botaoCopiar(o.pergunta_virada) + '</div>', 's-virada');
+    if (o.prova) h += secao('sec-prova', 5, 'Prova sugerida', '<p>' + texto(o.prova) + '</p>', 's-prova');
+    if (o.evitar) h += secao('sec-evitar', 6, 'O que evitar', '<p>' + texto(o.evitar) + '</p>', 's-evitar');
+    $('#viewDetalhe').innerHTML = h;
+  }
+
+  /* ---------- Registros ---------- */
+  function renderRegistros() {
+    var r = state.registros;
+    $('#regResumo').textContent = r.length ? (r.length === 1 ? '1 registro salvo.' : r.length + ' registros salvos.') : 'Nenhum registro salvo ainda.';
+    $('#regLista').innerHTML = r.slice().reverse().map(function (x) {
+      var data = '';
+      try { data = new Date(x.data).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }); } catch (e) { data = x.data; }
+      return '<li class="reg"><div><q>' + esc(x.fala) + '</q><small>' + esc(x.quem) + ' · ' + esc(data) + '</small>' +
+        (x.contexto ? '<small>' + esc(x.contexto) + '</small>' : '') + '</div>' +
+        '<button type="button" class="del" data-act="apagar-registro" data-id="' + esc(x.id) + '" aria-label="Apagar registro">' + ICON.trash + '</button></li>';
+    }).join('');
+    $('#gRegs').textContent = r.length ? (r.length === 1 ? '1 registro salvo neste aparelho.' : r.length + ' registros salvos neste aparelho.') : 'Nenhum registro salvo neste aparelho.';
+  }
+
+  function renderGestor() {
+    var n = state.base.length;
+    var txt = '<b>' + n + (n === 1 ? ' objeção' : ' objeções') + '</b>, ' + categorias().length + ' categorias. Origem: ';
+    if (state.origem === 'importada') {
+      var d = '';
+      try { d = state.importadoEm ? new Date(state.importadoEm).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' }) : ''; } catch (e) {}
+      txt += '<b>base importada</b>' + (d ? ' em ' + esc(d) : '') + '.';
+    } else {
+      txt += '<b>base original do código</b>.';
+    }
+    $('#gBase').innerHTML = txt;
+  }
+
+  /* ---------- Roteamento por hash ---------- */
+  function setView(v) {
+    var anterior = state.view;
+    if (anterior === 'list' && v !== 'list' && !isDesktop()) state.scrollLista = window.scrollY;
+    if (v !== 'list') state.veioDaLista = anterior === 'list';
+    state.view = v;
+    document.body.setAttribute('data-view', v);
+    $('#viewVazia').hidden = v !== 'list';
+    $('#viewDetalhe').hidden = v !== 'detail';
+    $('#viewRegistrar').hidden = v !== 'registrar';
+    $('#viewGestor').hidden = v !== 'gestor';
+    if (v === 'list') {
+      if (!isDesktop()) window.scrollTo(0, state.scrollLista);
+    } else {
+      if (isDesktop()) $('#main').scrollTop = 0; else window.scrollTo(0, 0);
+    }
+  }
+
+  function focar(el) { if (el) { try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); } } }
+
+  function rota() {
+    var h = state.rota || '#/';
+    if (h.indexOf('#/o/') === 0) {
+      var id = decodeURIComponent(h.slice(4));
+      var o = porId(id);
+      if (!o) { ir('#/', true); return; }
+      state.selecionado = id;
+      renderDetalhe(o);
+      setView('detail');
+      renderLista();
+      focar($('#dTitulo'));
+    } else if (h === '#/registrar') {
+      if (state.prefill) { $('#regFala').value = state.prefill; state.prefill = ''; }
+      $('#regMsg').textContent = '';
+      renderRegistros();
+      setView('registrar');
+      focar($('#tRegistrar'));
+    } else if (h === '#/gestor') {
+      $('#gMsg').textContent = '';
+      renderGestor();
+      renderRegistros();
+      setView('gestor');
+      focar($('#tGestor'));
+    } else {
+      state.selecionado = null;
+      setView('list');
+      renderLista();
+    }
+  }
+
+  /* Navegação: funciona mesmo quando o navegador ou o visualizador bloqueia
+     a troca de endereço (arquivo aberto em pré-visualização, iframe, etc.) */
+  function lerHash() {
+    try { return location.hash || '#/'; } catch (e) { return '#/'; }
+  }
+  function ir(destino, substituir) {
+    if (destino === state.rota) { rota(); return; }
+    var gravou = false;
+    try {
+      if (substituir) history.replaceState(null, '', destino);
+      else history.pushState(null, '', destino);
+      gravou = lerHash() === destino;
+    } catch (e) { gravou = false; }
+    if (!substituir) state.historico = gravou ? state.historico + 1 : 0;
+    state.rota = destino;
+    rota();
+  }
+  function aoMudarEndereco() {
+    var h = lerHash();
+    if (h === state.rota) return;
+    if (state.historico > 0) state.historico--;
+    state.rota = h;
+    rota();
+  }
+
+  function voltar() {
+    if (state.veioDaLista && state.historico > 0) {
+      try { history.back(); return; } catch (e) {}
+    }
+    ir('#/');
+  }
+
+  /* ---------- Ações ---------- */
+  var toastTimer;
+  function toast(msg) {
+    var t = $('#toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove('show'); }, 1600);
+  }
+
+  function copiar(txt, btn) {
+    function ok() {
+      if (btn) {
+        var orig = btn.innerHTML;
+        btn.classList.add('ok');
+        btn.innerHTML = ICON.check + '<span class="lbl">Copiado</span>';
+        setTimeout(function () { btn.classList.remove('ok'); btn.innerHTML = orig; }, 1400);
+      }
+      toast('Fala copiada');
+    }
+    function alternativo() {
+      var ta = document.createElement('textarea');
+      ta.value = txt; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      var feito = false;
+      try { feito = document.execCommand('copy'); } catch (e) {}
+      ta.remove();
+      if (feito) ok(); else toast('Não foi possível copiar neste navegador');
+    }
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(txt).then(ok, alternativo);
+    else alternativo();
+  }
+
+  function alternarFavorito(id) {
+    var i = state.favoritos.indexOf(id);
+    if (i === -1) state.favoritos.push(id); else state.favoritos.splice(i, 1);
+    store.set(KEYS.favoritos, state.favoritos);
+    renderChips();
+    renderLista();
+    if (state.view === 'detail' && state.selecionado === id) {
+      var o = porId(id); if (o) renderDetalhe(o);
+    }
+    toast(i === -1 ? 'Adicionado aos favoritos' : 'Removido dos favoritos');
+  }
+
+  function baixar(nome, dados) {
+    var blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = nome;
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1500);
+  }
+
+  function exportarBase() {
+    baixar('servis-objecoes-base-' + hoje() + '.json', {
+      app: 'servis-objecoes', tipo: 'base', versao: 1, exportado_em: new Date().toISOString(),
+      total: state.base.length, objecoes: state.base
+    });
+    msgGestor('Base exportada.', 'ok');
+  }
+
+  function exportarRegistros() {
+    if (!state.registros.length) { toast('Não há registros para exportar'); return; }
+    baixar('servis-objecoes-registros-' + hoje() + '.json', {
+      app: 'servis-objecoes', tipo: 'registros', exportado_em: new Date().toISOString(),
+      total: state.registros.length, registros: state.registros
+    });
+    toast('Registros exportados');
+  }
+
+  function msgGestor(t, tipo) { var m = $('#gMsg'); m.textContent = t; m.className = 'msg ' + (tipo || ''); }
+
+  function importarBase(arquivo) {
+    var leitor = new FileReader();
+    leitor.onload = function () {
+      var nova;
+      try {
+        var dados = JSON.parse(String(leitor.result).replace(/^\uFEFF/, ''));
+        nova = validarBase(dados);
+      } catch (e) {
+        msgGestor('Não foi possível importar: ' + (e instanceof SyntaxError ? 'o arquivo não é um JSON válido.' : e.message), 'err');
+        return;
+      }
+      if (!confirm('Substituir a base atual (' + state.base.length + ' objeções) pela base do arquivo (' + nova.length + ' objeções)?')) {
+        msgGestor('Importação cancelada.', '');
+        return;
+      }
+      var quando = new Date().toISOString();
+      var salvo = store.set(KEYS.base, { importado_em: quando, objecoes: nova });
+      state.base = nova; state.origem = 'importada'; state.importadoEm = quando;
+      indexar(); renderChips(); renderLista(); renderGestor();
+      msgGestor(salvo
+        ? 'Base importada com ' + nova.length + ' objeções.'
+        : 'Base importada só para esta sessão: o armazenamento do aparelho está indisponível.', salvo ? 'ok' : 'err');
+    };
+    leitor.onerror = function () { msgGestor('Não foi possível ler o arquivo.', 'err'); };
+    leitor.readAsText(arquivo, 'utf-8');
+  }
+
+  function restaurarBase() {
+    if (state.origem === 'codigo') { msgGestor('A base em uso já é a original.', ''); return; }
+    if (!confirm('Descartar a base importada e voltar para a base original?')) return;
+    store.remove(KEYS.base);
+    carregarBase(); renderChips(); renderLista(); renderGestor();
+    msgGestor('Base original restaurada.', 'ok');
+  }
+
+  /* ---------- Tema e Modo Reunião ---------- */
+  var mqEscuro = window.matchMedia('(prefers-color-scheme: dark)');
+  function temaEfetivo() {
+    var t = document.documentElement.getAttribute('data-theme');
+    return t || (mqEscuro.matches ? 'dark' : 'light');
+  }
+  function atualizarTema() {
+    var escuro = temaEfetivo() === 'dark';
+    $('#icoTema').innerHTML = escuro ? ICON.sun : ICON.moon;
+    $('#btnTema').setAttribute('aria-label', escuro ? 'Mudar para tema claro' : 'Mudar para tema escuro');
+    $('#btnTema').title = escuro ? 'Tema claro' : 'Tema escuro';
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', escuro ? '#011936' : '#022F63');
+  }
+  function alternarTema() {
+    var novo = temaEfetivo() === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', novo);
+    store.set(KEYS.tema, novo);
+    atualizarTema();
+  }
+  function aplicarReuniao(ativo) {
+    document.body.classList.toggle('reuniao', ativo);
+    $('#btnReuniao').setAttribute('aria-pressed', String(ativo));
+  }
+
+  /* ---------- Eventos ---------- */
+  document.addEventListener('click', function (ev) {
+    var link = ev.target.closest('a[href^="#/"]');
+    if (link && !ev.ctrlKey && !ev.metaKey && !ev.shiftKey) {
+      ev.preventDefault();
+      if (link.id === 'btnRegistrarVazio') state.prefill = state.query.trim();
+      ir(link.getAttribute('href'));
+      return;
+    }
+    var b = ev.target.closest('[data-act]');
+    if (!b) return;
+    var act = b.getAttribute('data-act');
+    if (act === 'fav') { ev.preventDefault(); alternarFavorito(b.getAttribute('data-id')); }
+    else if (act === 'cat') {
+      state.cat = b.getAttribute('data-cat');
+      renderChips(); renderLista();
+      var ativo = document.querySelector('.chip[aria-pressed="true"]');
+      if (ativo && ativo.scrollIntoView) ativo.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      if (!isDesktop()) window.scrollTo(0, Math.min(window.scrollY, $('.controls').offsetTop));
+    }
+    else if (act === 'copiar') copiar(b.getAttribute('data-texto'), b);
+    else if (act === 'voltar') voltar();
+    else if (act === 'ir') {
+      var alvo = document.getElementById(b.getAttribute('data-alvo'));
+      if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    else if (act === 'exportar-base') exportarBase();
+    else if (act === 'importar-base') $('#arqBase').click();
+    else if (act === 'restaurar-base') restaurarBase();
+    else if (act === 'exportar-registros') exportarRegistros();
+    else if (act === 'apagar-registro') {
+      if (!confirm('Apagar este registro do aparelho?')) return;
+      var id = b.getAttribute('data-id');
+      state.registros = state.registros.filter(function (x) { return x.id !== id; });
+      store.set(KEYS.registros, state.registros);
+      renderRegistros();
+    }
+  });
+
+  $('#arqBase').addEventListener('change', function () {
+    if (this.files && this.files[0]) importarBase(this.files[0]);
+    this.value = '';
+  });
+
+  var q = $('#q');
+  q.addEventListener('input', function () { state.query = q.value; renderLista(); });
+  q.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Enter') {
+      var primeiro = document.querySelector('#lista a.card');
+      if (primeiro) { ir(primeiro.getAttribute('href')); q.blur(); }
+    } else if (ev.key === 'Escape') {
+      q.value = ''; state.query = ''; renderLista();
+    }
+  });
+  $('#btnLimpar').addEventListener('click', function () { q.value = ''; state.query = ''; renderLista(); q.focus(); });
+
+  document.addEventListener('keydown', function (ev) {
+    var tag = (ev.target.tagName || '').toLowerCase();
+    if (ev.key === '/' && tag !== 'input' && tag !== 'textarea' && tag !== 'select') {
+      ev.preventDefault();
+      if (!isDesktop() && state.view !== 'list') ir('#/');
+      q.focus();
+    }
+  });
+
+  $('#formRegistro').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var fala = $('#regFala').value.trim();
+    var msg = $('#regMsg');
+    if (!fala) { msg.textContent = 'Escreva o que o cliente disse.'; msg.className = 'msg err'; $('#regFala').focus(); return; }
+    var reg = {
+      id: 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      data: new Date().toISOString(),
+      fala: fala,
+      quem: $('#regQuem').value,
+      contexto: $('#regContexto').value.trim()
+    };
+    state.registros.push(reg);
+    var salvo = store.set(KEYS.registros, state.registros);
+    $('#regFala').value = ''; $('#regContexto').value = '';
+    msg.textContent = salvo ? 'Registro salvo neste aparelho.' : 'Registro guardado só nesta sessão: o armazenamento do aparelho está indisponível.';
+    msg.className = 'msg ' + (salvo ? 'ok' : 'err');
+    renderRegistros();
+  });
+
+  $('#btnTema').addEventListener('click', alternarTema);
+  if (mqEscuro.addEventListener) mqEscuro.addEventListener('change', atualizarTema);
+  $('#btnReuniao').addEventListener('click', function () {
+    var ativo = !document.body.classList.contains('reuniao');
+    aplicarReuniao(ativo);
+    store.set(KEYS.reuniao, ativo);
+    toast(ativo ? 'Modo Reunião ativado' : 'Modo Reunião desativado');
+  });
+
+  window.addEventListener('popstate', aoMudarEndereco);
+  window.addEventListener('hashchange', aoMudarEndereco);
+
+  /* ---------- Início ---------- */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  carregarBase();
+  var favSalvos = store.get(KEYS.favoritos, []);
+  state.favoritos = Array.isArray(favSalvos) ? favSalvos.map(str) : [];
+  var regSalvos = store.get(KEYS.registros, []);
+  state.registros = Array.isArray(regSalvos) ? regSalvos : [];
+  aplicarReuniao(store.get(KEYS.reuniao, false) === true);
+  atualizarTema();
+  $('#avisoArmazenamento').hidden = armazenamentoOk;
+  renderChips();
+  state.rota = lerHash();
+  rota();
+
+  /* Cache offline e "Adicionar à tela inicial": só quando servido por http(s) e se o sw.js existir */
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+  }
+})();
+</script>
+</body>
+</html>

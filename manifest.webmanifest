@@ -1,0 +1,16 @@
+{
+  "name": "Servis Objeções",
+  "short_name": "Objeções",
+  "description": "Guia de contorno de objeções para consultores comerciais da Servis, vertical de condomínios.",
+  "lang": "pt-BR",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#022F63",
+  "theme_color": "#022F63",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
